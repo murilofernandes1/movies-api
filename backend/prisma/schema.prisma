@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  name String @unique
+  password String
+}
+
+model Cartaz {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  filmes   Filme []
+}
+
+model Filme{
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  titulo         String
+  sinopse        String
+  dataLancamento DateTime
+  duracao        Int
+
+  cartazId String? @db.ObjectId
+  cartaz   Cartaz? @relation(fields: [cartazId], references: [id])
+  sessao Sessao[]
+}
+
+model Sessao {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  data DateTime
+  horario Int
+  sala Int
+  filmeId String? @db.ObjectId
+  filme Filme? @relation(fields: [filmeId] , references: [id])
+
+}

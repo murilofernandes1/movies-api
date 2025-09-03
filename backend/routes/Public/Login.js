@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
     }
 
     //gerando o token jwt
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1m" }); //aqui to criando o token e definindo a validade dele
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1d" }); //aqui to criando o token e definindo a validade dele
 
     res.status(200).json(token);
   } catch (error) {

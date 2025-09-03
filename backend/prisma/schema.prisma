@@ -11,12 +11,9 @@ model User {
   email String @unique
   name String @unique
   password String
+  role Role @default(USER)
 }
 
-model Cartaz {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  filmes   Filme []
-}
 
 model Filme{
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -24,18 +21,18 @@ model Filme{
   sinopse        String
   dataLancamento DateTime
   duracao        Int
-
-  cartazId String? @db.ObjectId
-  cartaz   Cartaz? @relation(fields: [cartazId], references: [id])
   sessao Sessao[]
 }
 
 model Sessao {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  data DateTime
-  horario Int
+  dataHora DateTime
   sala Int
   filmeId String? @db.ObjectId
   filme Filme? @relation(fields: [filmeId] , references: [id])
 
+}
+enum Role {
+  USER
+  ADMIN
 }

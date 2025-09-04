@@ -27,10 +27,35 @@ model Filme{
 model Sessao {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   dataHora DateTime
-  sala Int
+  sala Sala []
   filmeId String? @db.ObjectId
   filme Filme? @relation(fields: [filmeId] , references: [id])
+  reservas Reserva[]
 
+}
+model Sala {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  numeroSala Int
+  sessoes Sessao? @relation(fields: [sessaoId], references: [id])
+  sessaoId String? @db.ObjectId
+  cadeiras Cadeira []
+}
+
+model Cadeira {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  numeracao String
+  sala Sala @relation(fields: [salaId] , references: [id])
+  salaId String @db.ObjectId
+  reservas Reserva[]
+}
+
+model Reserva {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  usuarioId String
+  cadeira Cadeira @relation(fields: [cadeiraId], references: [id] )
+  cadeiraId String @db.ObjectId
+  sessao Sessao @relation(fields: [sessaoId], references: [id])
+  sessaoId String @db.ObjectId
 }
 enum Role {
   USER

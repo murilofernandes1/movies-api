@@ -16,7 +16,7 @@ app.use(cors());
 app.use("/", Login, Cadastro, Movies);
 
 // Middleware de autenticação
-app.use("/", auth);
+app.use("/", auth, Movies);
 
 // Middleware de admin + rotas admin
 app.use("/", authADM, handleMovies, handleSessions);

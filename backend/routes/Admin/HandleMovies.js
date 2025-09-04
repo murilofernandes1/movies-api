@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.post("/", async (req, res) => {
+router.post("/movies", async (req, res) => {
   const { titulo, sinopse, duracao, dataLancamento } = req.body;
   try {
     const createMovie = await prisma.filme.create({
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/movies/:id", async (req, res) => {
   const { id } = req.params;
   const { titulo, sinopse, duracao, dataLancamento } = req.body;
   try {
@@ -40,7 +40,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/movies/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const deleteMovie = await prisma.filme.delete({

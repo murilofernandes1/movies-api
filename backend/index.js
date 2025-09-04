@@ -1,7 +1,6 @@
 import express from "express";
 import Cadastro from "./routes/Public/Cadastro.js";
 import Login from "./routes/Public/Login.js";
-import Users from "./routes/Private/Users.js";
 import Movies from "./routes/Public/Movies.js";
 import handleMovies from "./routes/Admin/HandleMovies.js";
 import handleSessions from "./routes/Admin/HandleSessions.js";

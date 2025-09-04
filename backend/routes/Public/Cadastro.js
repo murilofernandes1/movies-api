@@ -1,9 +1,7 @@
 import express from "express";
 import pkg from "@prisma/client";
 const { PrismaClient } = pkg;
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-const JWT_SECRET = process.env.JWT_SECRET;
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -19,6 +17,7 @@ router.post("/cadastro", async (req, res) => {
         name: user.name,
         email: user.email,
         password: hashPassword,
+        role: user.role,
       },
     });
     res.status(201).json(createUser);

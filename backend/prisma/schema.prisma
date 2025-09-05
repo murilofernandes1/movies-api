@@ -12,6 +12,7 @@ model User {
   name String @unique
   password String
   role Role @default(USER)
+  reserva Reserva[]
 }
 
 
@@ -27,17 +28,18 @@ model Filme{
 model Sessao {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   dataHora DateTime
-  sala Sala []
-  filmeId String? @db.ObjectId
-  filme Filme? @relation(fields: [filmeId] , references: [id])
+  sala Sala? @relation(fields: [salaId], references: [id])
+  salaId String @db.ObjectId
+  filmeId String @db.ObjectId
+  filme Filme @relation(fields: [filmeId] , references: [id])
   reservas Reserva[]
 
 }
 model Sala {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   numeroSala Int
-  sessoes Sessao? @relation(fields: [sessaoId], references: [id])
-  sessaoId String? @db.ObjectId
+  sessoes Sessao[]
+  sessaoId String @db.ObjectId
   cadeiras Cadeira []
 }
 
@@ -51,7 +53,8 @@ model Cadeira {
 
 model Reserva {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  usuarioId String
+  usuarioId String @db.ObjectId
+  usuario User @relation(fields: [usuarioId], references: [id])
   cadeira Cadeira @relation(fields: [cadeiraId], references: [id] )
   cadeiraId String @db.ObjectId
   sessao Sessao @relation(fields: [sessaoId], references: [id])

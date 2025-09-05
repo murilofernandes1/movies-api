@@ -4,19 +4,22 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// Criar sessão para um filme
-router.post("/:filmeId", async (req, res) => {
-  const filmeId = req.params.filmeId;
-  const { sala, data, horario } = req.body;
+router.post("/movies/:id/sessao", async (req, res) => {
+  const id = req.params.id;
+  const { filmeId, data, hora, salaId } = req.body;
 
-  const dateTime = new Date(`${data}T${horario}`);
-
+  if (!data || !hora || !filmeId || !salaId) {
+    return res
+      .status(400)
+      .json({ message: "Dados incompletos para criar sessão" });
+  }
+  const dataHora = new Date(`${data}T${hora}`);
   try {
     const createSession = await prisma.sessao.create({
       data: {
-        sala,
-        dataHora: dateTime,
+        dataHora,
         filmeId,
+        salaId,
       },
     });
     res.status(201).json(createSession);
@@ -25,8 +28,7 @@ router.post("/:filmeId", async (req, res) => {
   }
 });
 
-// Atualizar sessão pelo ID da sessão
-router.put("/:id", async (req, res) => {
+router.put("/sessao/:id", async (req, res) => {
   const { id } = req.params;
   const { sala, data, horario } = req.body;
 
@@ -43,8 +45,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Deletar sessão pelo ID da sessão
-router.delete("/:id", async (req, res) => {
+router.delete("/sessao/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.sessao.delete({ where: { id } });

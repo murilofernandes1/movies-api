@@ -4,6 +4,9 @@ import Login from "./routes/Public/Login.js";
 import Movies from "./routes/Public/Movies.js";
 import handleMovies from "./routes/Admin/HandleMovies.js";
 import handleSessions from "./routes/Admin/HandleSessions.js";
+import handleSalas from "./routes/Admin/HandleSalas.js";
+import handleReserva from "./routes/Private/HandleReserva.js";
+import seeSessions from "./routes/Private/SeeSessions.js";
 import auth from "./middleware/auth.js";
 import authADM from "./middleware/authADM.js";
 import cors from "cors";
@@ -16,10 +19,10 @@ app.use(cors());
 app.use("/", Login, Cadastro, Movies);
 
 // Middleware de autenticação
-app.use("/", auth, Movies);
+app.use("/", auth, Movies, handleReserva, seeSessions);
 
 // Middleware de admin + rotas admin
-app.use("/", authADM, handleMovies, handleSessions);
+app.use("/", authADM, handleMovies, handleSessions, handleSalas, handleReserva);
 
 app.listen(3000, () => {
   console.log("Servidor rodando na porta 3000");

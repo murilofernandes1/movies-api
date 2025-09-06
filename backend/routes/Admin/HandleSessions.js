@@ -4,25 +4,18 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.post("/movies/:id/sessao", async (req, res) => {
-  const id = req.params.id;
-  const { filmeId, data, hora, salaId } = req.body;
+router.post("/sessions", async (req, res) => {
+  const { filmeId, dataHora, salaId } = req.body;
 
-  if (!data || !hora || !filmeId || !salaId) {
-    return res
-      .status(400)
-      .json({ message: "Dados incompletos para criar sessão" });
-  }
-  const dataHora = new Date(`${data}T${hora}`);
   try {
-    const createSession = await prisma.sessao.create({
+    const session = await prisma.sessao.create({
       data: {
-        dataHora,
-        filmeId,
-        salaId,
+        dataHora: new Date(dataHora),
+        filme: { connect: { id: filmeId } },
+        sala: { connect: { id: salaId } },
       },
     });
-    res.status(201).json(createSession);
+    res.status(201).json(session);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

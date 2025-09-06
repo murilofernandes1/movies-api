@@ -29,7 +29,7 @@ model Sessao {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   dataHora DateTime
   sala Sala? @relation(fields: [salaId], references: [id])
-  salaId String @db.ObjectId
+  salaId String? @db.ObjectId
   filmeId String @db.ObjectId
   filme Filme @relation(fields: [filmeId] , references: [id])
   reservas Reserva[]
@@ -37,9 +37,8 @@ model Sessao {
 }
 model Sala {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  numeroSala Int
+  numeroSala Int 
   sessoes Sessao[]
-  sessaoId String @db.ObjectId
   cadeiras Cadeira []
 }
 

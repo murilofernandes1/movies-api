@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const salaId = "68ba47428b1d764cf26a44a4";
+  const salaId = "68ba4a6134d89bb92767efdd";
 
   await prisma.cadeira.createMany({
     data: [

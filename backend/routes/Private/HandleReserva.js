@@ -39,7 +39,6 @@ router.post("/sessao/:id/reserva", async (req, res) => {
       });
     }
 
-    // Cria a reserva
     const reserva = await prisma.reserva.create({
       data: {
         usuarioId,

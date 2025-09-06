@@ -22,7 +22,15 @@ app.use("/", Login, Cadastro, Movies);
 app.use("/", auth, Movies, handleReserva, seeSessions);
 
 // Middleware de admin + rotas admin
-app.use("/", authADM, handleMovies, handleSessions, handleSalas, handleReserva);
+app.use(
+  "/",
+  authADM,
+  handleMovies,
+  handleSessions,
+  handleSalas,
+  handleReserva,
+  seeSessions
+);
 
 app.listen(3000, () => {
   console.log("Servidor rodando na porta 3000");

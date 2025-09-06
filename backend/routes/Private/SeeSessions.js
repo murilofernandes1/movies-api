@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/sessao", async (req, res) => {
+router.get("/sessions", async (req, res) => {
   const { id } = req.params;
   try {
     const verSessoes = await prisma.sessao.findMany({

@@ -16,17 +16,24 @@ function generateCadeiras() {
   return cadeiras;
 }
 
-router.post("/sessao/:id/salas", async (req, res) => {
-  const sessoesId = req.params.id;
+router.get("/salas", async (req, res) => {
+  try {
+    const salas = await prisma.sala.findMany();
+    res.status(200).json(salas);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: error instanceof Error ? error.message : error });
+  }
+});
+
+router.post("/salas", async (req, res) => {
   const { numeroSala } = req.body;
 
   try {
     const createSala = await prisma.sala.create({
       data: {
-        sessaoId: sessoesId,
-        numeroSala: 2,
-        sessoes: { connect: { id: sessoesId } },
-        cadeiras: { create: generateCadeiras() },
+        numeroSala: numeroSala,
       },
     });
     res.status(201).json(createSala);

@@ -15,13 +15,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Rotas públicas
-app.use("/", Login, Cadastro, Movies);
+app.use("/", Login, Cadastro);
 
-// Middleware de autenticação
 app.use("/", auth, Movies, handleReserva, seeSessions);
 
-// Middleware de admin + rotas admin
 app.use(
   "/",
   authADM,

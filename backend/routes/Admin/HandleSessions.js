@@ -21,7 +21,7 @@ router.post("/sessions", async (req, res) => {
   }
 });
 
-router.put("/sessao/:id", async (req, res) => {
+router.put("/sessions/:id", async (req, res) => {
   const { id } = req.params;
   const { sala, data, horario } = req.body;
 
@@ -29,7 +29,7 @@ router.put("/sessao/:id", async (req, res) => {
 
   try {
     const updateSession = await prisma.sessao.update({
-      where: { id },
+      where: { id: filmeDeletado },
       data: { sala, dataHora: dateTime },
     });
     res.status(200).json(updateSession);
@@ -38,7 +38,7 @@ router.put("/sessao/:id", async (req, res) => {
   }
 });
 
-router.delete("/sessao/:id", async (req, res) => {
+router.delete("/sessions/:id", async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.sessao.delete({ where: { id } });

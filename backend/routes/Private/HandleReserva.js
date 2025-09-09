@@ -3,6 +3,15 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
+router.get("/reserva", async (req, res) => {
+  try {
+    const reservas = await prisma.reserva.findMany();
+    res.status(201).json(reservas);
+  } catch (error) {
+    res.status(500).json({ message: "Nenhuma reserva encontrada" });
+  }
+});
+
 router.post("/sessao/:id/reserva", async (req, res) => {
   const sessaoId = req.params.id;
   const { numeracao } = req.body;

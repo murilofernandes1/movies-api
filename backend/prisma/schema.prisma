@@ -22,7 +22,9 @@ model Filme{
   sinopse        String
   dataLancamento DateTime
   duracao        Int
-  sessao Sessao[]
+  sessoesFilme Sessao [] @relation("FilmeRelation")
+  sessoesTitulo Sessao [] @relation("TituloRelation")
+  
 }
 
 model Sessao {
@@ -30,8 +32,10 @@ model Sessao {
   dataHora DateTime
   sala Sala? @relation(fields: [salaId], references: [id])
   salaId String? @db.ObjectId
-  filmeId String @db.ObjectId
-  filme Filme @relation(fields: [filmeId] , references: [id])
+  filmeId String? @db.ObjectId
+  filme Filme? @relation("FilmeRelation", fields: [filmeId], references: [id])
+  tituloId String? @db.ObjectId
+  titulo Filme? @relation ("TituloRelation", fields: [tituloId], references: [id])
   reservas Reserva[]
 
 }

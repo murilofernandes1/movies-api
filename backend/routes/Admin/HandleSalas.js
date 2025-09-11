@@ -3,20 +3,27 @@ import { PrismaClient } from "@prisma/client";
 
 const router = express.Router();
 const prisma = new PrismaClient();
-function generateCadeiras() {
-  const cadeiras = [];
+
+// Helper function to generate cadeiras
+async function gerarCadeirasParaSala(salaId) {
   const fileiras = ["A", "B", "C", "D", "E", "F"];
   const porFileira = 5;
+  const cadeiras = [];
 
   for (let f = 0; f < fileiras.length; f++) {
     for (let n = 1; n <= porFileira; n++) {
-      cadeiras.push({ numeracao: `${fileiras[f]}${n}` });
+      cadeiras.push({
+        numeracao: `${fileiras[f]}${n}`,
+        salaId: salaId,
+      });
     }
   }
-  return cadeiras;
-}
 
-router.get("/salas", async (req, res) => {
+  await prisma.cadeira.createMany({
+    data: cadeiras,
+  });
+}
+router.get("/salas/:id", async (req, res) => {
   try {
     const salas = await prisma.sala.findMany();
     res.status(200).json(salas);
@@ -36,6 +43,7 @@ router.post("/salas", async (req, res) => {
         numeroSala: numeroSala,
       },
     });
+    await gerarCadeirasParaSala(createSala.id);
     res.status(201).json(createSala);
   } catch (error) {
     res

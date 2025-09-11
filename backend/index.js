@@ -7,6 +7,9 @@ import handleSessions from "./routes/Admin/HandleSessions.js";
 import handleSalas from "./routes/Admin/HandleSalas.js";
 import handleReserva from "./routes/Private/HandleReserva.js";
 import seeSessions from "./routes/Private/SeeSessions.js";
+import handleUsers from "./routes/Admin/Users.js";
+import seeCadeiras from "./routes/Private/SeeCadeiras.js";
+import updateProfile from "./routes/Private/HandleProfile.js";
 import auth from "./middleware/auth.js";
 import authADM from "./middleware/authADM.js";
 import cors from "cors";
@@ -17,7 +20,15 @@ app.use(cors());
 
 app.use("/", Login, Cadastro);
 
-app.use("/", auth, Movies, handleReserva, seeSessions);
+app.use(
+  "/",
+  auth,
+  Movies,
+  handleReserva,
+  seeSessions,
+  updateProfile,
+  seeCadeiras
+);
 
 app.use(
   "/",
@@ -26,7 +37,10 @@ app.use(
   handleSessions,
   handleSalas,
   handleReserva,
-  seeSessions
+  seeSessions,
+  handleUsers,
+  updateProfile,
+  seeCadeiras
 );
 
 app.listen(3000, () => {

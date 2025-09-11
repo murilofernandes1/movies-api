@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.post("/login", async (req, res) => {
+router.post("/users/login", async (req, res) => {
   try {
     const userInfo = req.body;
 
@@ -25,11 +25,17 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Senha inválida" });
     }
 
-    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { id: user.id, role: user.role, name: user.name },
+      JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
 
-    res.status(200).json({ token, role: user.role });
+    res
+      .status(200)
+      .json({ name: user.name, token, role: user.role, id: user.id });
   } catch (error) {
     res
       .status(500)

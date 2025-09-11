@@ -2,9 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const salaId = "68bf70244138d811c3d80896";
 async function main() {
-  const salaId = "68ba4a6134d89bb92767efdd";
-
   await prisma.cadeira.createMany({
     data: [
       { numeracao: "A1", salaId },
@@ -12,6 +11,18 @@ async function main() {
       { numeracao: "A3", salaId },
       { numeracao: "A4", salaId },
       { numeracao: "A5", salaId },
+
+      { numeracao: "B1", salaId },
+      { numeracao: "B2", salaId },
+      { numeracao: "B3", salaId },
+      { numeracao: "B4", salaId },
+      { numeracao: "B5", salaId },
+
+      { numeracao: "C1", salaId },
+      { numeracao: "C2", salaId },
+      { numeracao: "C3", salaId },
+      { numeracao: "C4", salaId },
+      { numeracao: "C5", salaId },
     ],
   });
 

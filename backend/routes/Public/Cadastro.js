@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.post("/cadastro", async (req, res) => {
+router.post("/users/cadastro", async (req, res) => {
   try {
     const user = req.body;
 

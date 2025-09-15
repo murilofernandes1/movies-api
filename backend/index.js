@@ -10,6 +10,7 @@ import seeSessions from "./routes/Private/SeeSessions.js";
 import handleUsers from "./routes/Admin/Users.js";
 import seeCadeiras from "./routes/Private/SeeCadeiras.js";
 import updateProfile from "./routes/Private/HandleProfile.js";
+import seeReservas from "./routes/Private/SeeReservas.js";
 import auth from "./middleware/auth.js";
 import authADM from "./middleware/authADM.js";
 import cors from "cors";
@@ -18,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/", Login, Cadastro);
+app.use("/", Login, Cadastro, Movies, seeSessions);
 
 app.use(
   "/",
@@ -27,7 +28,8 @@ app.use(
   handleReserva,
   seeSessions,
   updateProfile,
-  seeCadeiras
+  seeCadeiras,
+  seeReservas
 );
 
 app.use(

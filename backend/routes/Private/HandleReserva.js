@@ -3,15 +3,13 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/users/:id/reserva", async (req, res) => {
+router.get("/reserva", async (req, res) => {
   try {
-    const reservas = await prisma.reserva.findMany();
-    res.status(201).json(reservas);
+    const verReservas = await prisma.reserva.findMany();
   } catch (error) {
-    res.status(500).json({ message: "Nenhuma reserva encontrada" });
+    console.log("");
   }
 });
-
 router.post(
   "/sessions/:sessaoId/:cadeiraId/:userId/reserva",
   async (req, res) => {

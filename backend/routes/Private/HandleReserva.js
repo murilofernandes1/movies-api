@@ -3,13 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get("/reserva", async (req, res) => {
-  try {
-    const verReservas = await prisma.reserva.findMany();
-  } catch (error) {
-    console.log("");
-  }
-});
 router.post(
   "/sessions/:sessaoId/:cadeiraId/:userId/reserva",
   async (req, res) => {
@@ -45,7 +38,6 @@ router.post(
     }
   }
 );
-
 router.delete("/reserva/:id", async (req, res) => {
   const id = req.params.id;
   try {

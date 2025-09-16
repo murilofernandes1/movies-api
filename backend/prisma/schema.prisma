@@ -23,19 +23,17 @@ model Filme{
   dataLancamento DateTime
   duracao        Int
   sessoesFilme Sessao [] @relation("FilmeRelation")
-  sessoesTitulo Sessao [] @relation("TituloRelation")
+  posterUrl String 
   
 }
 
 model Sessao {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   dataHora DateTime
-  sala Sala? @relation(fields: [salaId], references: [id])
-  salaId String? @db.ObjectId
-  filmeId String? @db.ObjectId
-  filme Filme? @relation("FilmeRelation", fields: [filmeId], references: [id])
-  tituloId String? @db.ObjectId
-  titulo Filme? @relation ("TituloRelation", fields: [tituloId], references: [id])
+  sala Sala @relation(fields: [salaId], references: [id])
+  salaId String @db.ObjectId
+  filmeId String @db.ObjectId
+  filme Filme @relation("FilmeRelation", fields: [filmeId], references: [id])
   reservas Reserva[]
 
 }

@@ -5,12 +5,14 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/movies", async (req, res) => {
-  const { titulo, sinopse, duracao, dataLancamento } = req.body;
+  const { titulo, sinopse, duracao, dataLancamento, posterUrl } = req.body;
   try {
     const createMovie = await prisma.filme.create({
       data: {
         titulo,
         sinopse,
+        posterUrl:
+          posterUrl || "https://via.placeholder.com/200x300?text=Sem+Imagem",
         duracao: Number(duracao),
         dataLancamento: new Date(dataLancamento),
       },

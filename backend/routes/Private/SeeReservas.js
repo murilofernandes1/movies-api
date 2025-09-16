@@ -4,8 +4,14 @@ import { PrismaClient } from "@prisma/client";
 const router = express.Router();
 const prisma = new PrismaClient();
 
+import { isValidObjectId } from "mongoose"; // se usar mongoose só pra validar
+
 router.get("/users/:id/reserva", async (req, res) => {
   const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ message: "ID do usuário não fornecido" });
+  }
 
   try {
     const reservas = await prisma.reserva.findMany({
@@ -37,6 +43,7 @@ router.get("/users/:id/reserva", async (req, res) => {
     res.status(500).json({ message: "Erro ao buscar reservas" });
   }
 });
+
 router.get("/reserva/:id", async (req, res) => {
   const { id } = req.params;
   try {

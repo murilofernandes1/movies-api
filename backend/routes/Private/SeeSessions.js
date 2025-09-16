@@ -9,7 +9,6 @@ router.get("/sessions", async (req, res) => {
   try {
     const verSessoes = await prisma.sessao.findMany({
       include: {
-        titulo: { select: { titulo: true } },
         filme: { select: { titulo: true } },
       },
     });
@@ -27,7 +26,6 @@ router.get("/sessions/:id", async (req, res) => {
   try {
     const verSessoes = await prisma.sessao.findMany({
       include: {
-        titulo: { select: { titulo: true } },
         filme: { select: { titulo: true } },
       },
     });

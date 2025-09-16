@@ -17,7 +17,11 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://cinemao.vercel.app/",
+  })
+);
 
 app.use("/", Login, Cadastro, Movies, seeSessions);
 
@@ -45,8 +49,9 @@ app.use(
   seeCadeiras
 );
 
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
 
 export default app;

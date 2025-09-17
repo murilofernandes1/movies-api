@@ -33,5 +33,25 @@ router.get("/sessions/:sessaoId/cadeiras", async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor", error });
   }
 });
+router.get("/salas", async (req, res) => {
+  try {
+    const salas = await prisma.sala.findMany();
+    res.status(200).json(salas);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: error instanceof Error ? error.message : error });
+  }
+});
+router.get("/salas/:id", async (req, res) => {
+  try {
+    const salas = await prisma.sala.findMany();
+    res.status(200).json(salas);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: error instanceof Error ? error.message : error });
+  }
+});
 
 export default router;

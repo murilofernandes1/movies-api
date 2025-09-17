@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://cinemao.vercel.app/",
+    origin: "https://cinemao.vercel.app",
   })
 );
 
